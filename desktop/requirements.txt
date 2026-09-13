@@ -1,0 +1,6 @@
+# Extra deps for the native desktop window (pywebview).
+# Install on top of backend/requirements.txt:
+#   pip install -r backend/requirements.txt -r desktop/requirements.txt
+
+pywebview>=5.3,<6
+pyinstaller>=6.10,<7

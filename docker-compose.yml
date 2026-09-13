@@ -1,0 +1,13 @@
+services:
+  crawler:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - crawler-data:/app/backend/data
+    environment:
+      CRAWLER_CORS_ORIGINS: http://localhost:8000,http://127.0.0.1:8000
+    restart: unless-stopped
+
+volumes:
+  crawler-data:
