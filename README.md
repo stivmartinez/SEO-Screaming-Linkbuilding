@@ -1,5 +1,9 @@
 # SEO Screaming Link Building
 
+<p align="center">
+  <img src="docs/screaming-frog-open-source-free-alternative.webp" alt="SEO Screaming Link Building workspace — pages, link graph, and on-page SEO detail" width="1600" />
+</p>
+
 First-party crawler for sites you own. Map internal links, click depth, sitemap orphans, on-page SEO issues, and multilingual gaps — all on your machine.
 
 **By [stivmartinez.com](https://stivmartinez.com)** · open-source under MIT.
