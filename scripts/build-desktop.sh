@@ -5,11 +5,24 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
+PYTHON=python3
+command -v python3 >/dev/null 2>&1 || PYTHON=python
+
 if [[ ! -d backend/.venv ]]; then
-  python3 -m venv backend/.venv
+  "$PYTHON" -m venv backend/.venv
 fi
-# shellcheck disable=SC1091
-source backend/.venv/bin/activate
+
+# Git Bash on Windows uses Scripts/; Unix uses bin/
+if [[ -f backend/.venv/Scripts/activate ]]; then
+  # shellcheck disable=SC1091
+  source backend/.venv/Scripts/activate
+elif [[ -f backend/.venv/bin/activate ]]; then
+  # shellcheck disable=SC1091
+  source backend/.venv/bin/activate
+else
+  echo "Could not find venv activate script under backend/.venv" >&2
+  exit 1
+fi
 
 pip install -q -r backend/requirements.txt -r desktop/requirements.txt
 
