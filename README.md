@@ -21,7 +21,7 @@ It does **not** collect off-site backlinks.
 - Sitemap orphans (listed in the sitemap, zero internal inbound links)
 - Issue lists: broken URLs, redirects, missing title/H1, noindex, duplicate titles
 - Multilingual: hreflang, path-prefix languages, translation groups, missing locales, thin-content gaps
-- Workspace UI with filters and CSV / ZIP export
+- Workspace UI with filters and CSV export (pages)
 - Crawl options for sitemap discovery and language modes (auto / off / path / hreflang)
 
 ## Requirements

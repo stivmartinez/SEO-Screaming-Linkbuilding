@@ -73,6 +73,10 @@ dist/
 *.app/**
 LocalSEOCrawler/
 SEOScreamingLinkBuilding/
+
+# OS app-data / machine-local crawl stores (never commit)
+**/Application Support/SEOScreamingLinkBuilding/
+**/SEOScreamingLinkBuilding/
 warn-*.txt
 xref-*.html
 
@@ -81,6 +85,13 @@ xref-*.html
 .env.*
 !.env.example
 !.env.*.example
+*.pem
+id_rsa
+id_ed25519
+*.p12
+*.pfx
+credentials.json
+service-account*.json
 
 # OS / editors
 .DS_Store

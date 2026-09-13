@@ -62,4 +62,23 @@ export const api = {
     const query = search.toString();
     return request<PageGroupList>(`/api/crawls/${id}/page-groups${query ? `?${query}` : ""}`);
   },
+  downloadPagesCsv: async (id: number) => {
+    const response = await fetch(`/api/crawls/${id}/export/pages.csv`);
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(text || response.statusText);
+    }
+    const blob = await response.blob();
+    const header = response.headers.get("Content-Disposition") || "";
+    const match = /filename="?([^";]+)"?/i.exec(header);
+    const filename = match?.[1] || `crawl-${id}-pages.csv`;
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+  },
 };

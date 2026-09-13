@@ -182,6 +182,8 @@ export function Workspace({
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [page, setPage] = useState<PageDetail | null>(null);
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   const selected = byId.get(selectedId) ?? seedNode(graph.nodes, graph.default_lang);
 
@@ -297,6 +299,18 @@ export function Workspace({
     if (node?.page_id) onSelectPage?.(node.page_id);
   }
 
+  async function downloadCsv() {
+    setExportError(null);
+    setExporting(true);
+    try {
+      await api.downloadPagesCsv(crawl.id);
+    } catch (err) {
+      setExportError(err instanceof Error ? err.message : "CSV download failed");
+    } finally {
+      setExporting(false);
+    }
+  }
+
   if (!selected) {
     return <p className="muted">No pages in this crawl yet.</p>;
   }
@@ -329,12 +343,18 @@ export function Workspace({
             </button>
           )}
           {crawl.status === "completed" && (
-            <a className="btn secondary" href={`/api/crawls/${crawl.id}/export/all.zip`}>
-              Export
-            </a>
+            <button className="btn secondary" type="button" disabled={exporting} onClick={() => void downloadCsv()}>
+              {exporting ? "Downloading…" : "Download CSV"}
+            </button>
           )}
         </div>
       </header>
+
+      {exportError && (
+        <Callout id={`export-error-${crawl.id}`} tone="error" title="CSV download failed" dismissible={false}>
+          {exportError}
+        </Callout>
+      )}
 
       <div className="workspace-stats">
         <Stat active={filter === "all"} onClick={() => setFilter("all")} label={`${articles.length} pages`} />
